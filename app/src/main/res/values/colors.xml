@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorFab">#2196F3</color>
     <!--500-->
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryTransparent">#7D009688</color>

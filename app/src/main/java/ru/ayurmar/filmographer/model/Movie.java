@@ -23,6 +23,9 @@ public class Movie {
     public static final String STATUS_DISCOVERED = "status_disc";
     public static final String STATUS_TO_WATCH = "status_to_watch";
 
+    private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w500";
+    private static final String IMDB_BASE_URL = "http://www.imdb.com/title/";
+
     private String mId = "";
     private String mTitle = "";
     private String mImdbLink = "";
@@ -78,7 +81,11 @@ public class Movie {
     }
 
     public void setImdbLink(String imdbLink) {
-        mImdbLink = imdbLink;
+        if(isImdbInfoLoaded()){
+            this.mImdbLink = imdbLink;
+        } else {
+            this.mImdbLink = imdbLink == null ?  null : IMDB_BASE_URL + imdbLink;
+        }
     }
 
     public String getBackdropPath() {
@@ -86,7 +93,14 @@ public class Movie {
     }
 
     public void setBackdropPath(String backdropPath) {
-        mBackdropPath = backdropPath;
+        if(backdropPath == null){
+            return;
+        }
+        if(backdropPath.startsWith(POSTER_BASE_URL)){
+            this.mBackdropPath = backdropPath;
+        } else {
+            this.mBackdropPath = POSTER_BASE_URL + backdropPath;
+        }
     }
 
     public String getReleaseDate() {
