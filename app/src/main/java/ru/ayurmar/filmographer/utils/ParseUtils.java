@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
 
 /**
- * Created by Ayur on 16.02.2017.
+ * Содержит методы для загрузки сведений о фильмах, Аюр М., 16.02.2017.
  */
 
 public class ParseUtils {
@@ -85,7 +86,8 @@ public class ParseUtils {
 
     public static String createUrl(){
         Uri.Builder builder = Uri.parse(TMDB_DISCOVER_BASE).buildUpon()
-               .appendQueryParameter("api_key", API_KEY);
+                .appendQueryParameter("api_key", API_KEY)
+                .appendQueryParameter("language", Locale.getDefault().getLanguage());
         return builder.build().toString();
     }
 }

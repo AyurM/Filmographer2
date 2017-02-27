@@ -62,7 +62,8 @@ public class ParseUtilsTest {
     public void whenCorrectJsonThenItsParsed()
         throws IOException{
         String url = "http://api.themoviedb.org/3/discover/movie/" +
-                "?api_key=4cdbd4367d3bbac1a675ab6e9416c1e6";
+                "?api_key=4cdbd4367d3bbac1a675ab6e9416c1e6" +
+                "&language=ru";
         assertNotNull(ParseUtils.parseTmdbJson(ParseUtils.getJson(url), mContext));
         assertEquals(20, ParseUtils.parseTmdbJson(ParseUtils.getJson(url), mContext).size());
     }

@@ -2,15 +2,16 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     card_view:cardCornerRadius="4dp"
     >
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
         <!--Основные сведения: название, картинка, год, жанр, оценка-->
         <RelativeLayout
@@ -40,6 +41,7 @@
                 android:contentDescription="@string/movie_title_text"
                 android:src="@drawable/poster_placeholder"
                 />
+
             <TextView
                 android:id="@+id/text_view_info"
                 android:layout_width="match_parent"
@@ -51,6 +53,22 @@
                 android:padding="8dp"
                 android:visibility="visible"
                 />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                card_view:srcCompat="@drawable/ic_to_watch_list"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                card_view:backgroundTint="@color/colorPrimaryDark"
+                card_view:fabSize="normal"
+                tools:ignore="RelativeOverlap"/>
         </RelativeLayout>
         <!--Доп. сведения: описание, актеры, кнопки-->
         <RelativeLayout
@@ -102,7 +120,7 @@
                     android:background="@drawable/button_state_selector"
                     android:text="@string/button_want_to_watch_text"
                     style="@style/ButtonText"
-                    />
+                    tools:ignore="RelativeOverlap"/>
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
