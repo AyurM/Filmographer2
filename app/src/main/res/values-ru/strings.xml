@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">Filmographer</string>
+    <!--Кнопки-->
+    <string name="button_more_movies_text">Еще фильмы</string>
+    <string name="button_imdb_text">IMDb</string>
+    <string name="button_want_to_watch_text">Хочу посмотреть</string>
+    <string name="button_remove_from_list_text">Убрать из списка</string>
+    <string name="button_already_in_list_text">Добавлено</string>
+    <!--Инфо о фильме-->
+    <string name="movie_title_text">Название фильма</string>
+    <string name="movie_year_text">Год:</string>
+    <string name="movie_genre_text">Жанр:</string>
+    <string name="movie_cast_text">В ролях:</string>
+    <string name="movie_overview_text">Описание:</string>
+    <string name="movie_no_overview_text">Описание отсутствует</string>
+    <string name="movie_rating_text">IMDb:</string>
+    <string name="movie_overview_show_more_text">Еще</string>
+    <!--Сообщения-->
+    <string name="message_unknown_text">Неизвестно</string>
+    <string name="message_start_text">Найдите отличный фильм для просмотра!</string>
+    <string name="message_to_watch_start_text">Сохраняйте здесь фильмы, которые вы хотите посмотреть</string>
+    <string name="message_no_connection_text">Нет подключения к интернету</string>
+    <string name="message_share_text">Поделиться фильмами</string>
+    <string name="message_share1_text">Фильмы, которые я хочу посмотреть:</string>
+    <string name="message_share2_text">Найдено через Filmographer</string>
+    <!--Меню-->
+    <string name="menu_refresh_text">Найти фильмы</string>
+    <string name="menu_share_text">Поделиться</string>
+    <string name="menu_filter_parameters_text">Параметры фильтра</string>
+    <string name="menu_settings_text">Настройки</string>
+    <string name="menu_to_watch_text">Избранное</string>
+    <string name="menu_discover_title">Поиск фильмов</string>
+    <string name="menu_to_watch_title">К просмотру</string>
+    <string name="menu_about_title">Сведения</string>
+    <!--Фильтр-->
+    <string name="filter_release_date_text">Год выхода</string>
+    <string name="filter_date_divider_text">-</string>
+    <string name="filter_genre_text">Жанр</string>
+    <string name="filter_sort_order_text">Сортировка результатов</string>
+    <string name="filter_spinner_dropdown_text">Выпадающий список</string>
+    <string name="filter_tmdb_logo_text">Логотип TMDb</string>
+    <string-array name="filter_genres_names">
+        <item>Любой</item>
+        <item>Боевик</item>
+        <item>Приключения</item>
+        <item>Мультфильм</item>
+        <item>Комедия</item>
+        <item>Криминал</item>
+        <item>Документальный</item>
+        <item>Драма</item>
+        <item>Семейный</item>
+        <item>Фэнтези</item>
+        <item>История</item>
+        <item>Ужасы</item>
+        <item>Музыка</item>
+        <item>Детектив</item>
+        <item>Мелодрама</item>
+        <item>Фантастика</item>
+        <item>Телевизионный фильм</item>
+        <item>Триллер</item>
+        <item>Военный</item>
+        <item>Вестерн</item>
+    </string-array>
+    <string-array name="filter_genres_ids">
+        <item>null</item>
+        <item>28</item>
+        <item>12</item>
+        <item>16</item>
+        <item>35</item>
+        <item>80</item>
+        <item>99</item>
+        <item>18</item>
+        <item>10751</item>
+        <item>14</item>
+        <item>36</item>
+        <item>27</item>
+        <item>10402</item>
+        <item>9648</item>
+        <item>10749</item>
+        <item>878</item>
+        <item>10770</item>
+        <item>53</item>
+        <item>10752</item>
+        <item>37</item>
+    </string-array>
+    <string-array name="filter_sort_order_names">
+        <item>Случайная</item>
+        <item>По популярности</item>
+    </string-array>
+    <!--Navigation Drawer-->
+    <string name="drawer_list_item">Пункт навигационного меню</string>
+    <string name="drawer_open">Показать</string>
+    <string name="drawer_close">Скрыть</string>
+</resources>
