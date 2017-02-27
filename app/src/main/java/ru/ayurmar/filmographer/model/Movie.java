@@ -1,7 +1,7 @@
 package ru.ayurmar.filmographer.model;
 
 /**
- * Created by Ayur on 16.02.2017.
+ * Сведения о фильме, Аюр М., 16.02.2017.
  */
 
 public class Movie {
@@ -19,6 +19,9 @@ public class Movie {
     public static final String KEY_IMDB_INFO_LOADED = "imdbInfoLoaded";
     public static final String KEY_GENRES = "genres";
     public static final String KEY_GENRES_IDS = "genre_ids";
+
+    public static final String STATUS_DISCOVERED = "status_disc";
+    public static final String STATUS_TO_WATCH = "status_to_watch";
 
     private String mId = "";
     private String mTitle = "";
