@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,22 +26,17 @@ public class ParseUtils {
     public static final String TMDB_DISCOVER_BASE = "http://api.themoviedb.org/3/discover/movie/";
     public static final String API_KEY = "4cdbd4367d3bbac1a675ab6e9416c1e6";
 
-    public static JsonNode getJson(String url){
+    public static JsonNode getJson(String url)
+        throws IOException{
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode;
-        try {
-            rootNode = objectMapper.readTree(new URL(url));
-        } catch (Exception e){
-            return null;
-        }
+        rootNode = objectMapper.readTree(new URL(url));
         return rootNode;
     }
 
-    public static List<Movie> parseTmdbJson(String jsonString, Context context)
+    public static List<Movie> parseTmdbJson(JsonNode rootNode, Context context)
         throws IOException{
         List<Movie> result = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(jsonString);
         //парсинг результатов
         JsonNode moviesNode = rootNode.path(Movie.KEY_RESULTS);
         if(moviesNode.isMissingNode()){
@@ -79,7 +75,7 @@ public class ParseUtils {
         return result;
     }
 
-    public static String getGenreNameById(String id, List<String> ids, List<String> names){
+    private static String getGenreNameById(String id, List<String> ids, List<String> names){
         if(ids.contains(id)){
             return names.get(ids.indexOf(id));
         } else {

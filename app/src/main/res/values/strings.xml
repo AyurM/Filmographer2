@@ -1,6 +1,44 @@
 <resources>
     <string name="app_name">Filmographer</string>
+    <!--Buttons-->
+    <string name="button_more_movies_text">Find more movies!</string>
+    <string name="button_imdb_text">IMDb</string>
+    <string name="button_want_to_watch_text">Want to watch</string>
+    <string name="button_remove_from_list_text">Remove from list</string>
+    <string name="button_already_in_list_text">In your list</string>
+    <!--Movie info-->
+    <string name="movie_title_text">Movie Title</string>
+    <string name="movie_year_text">Year:</string>
+    <string name="movie_genre_text">Genre:</string>
+    <string name="movie_cast_text">Stars:</string>
+    <string name="movie_overview_text">Overview:</string>
+    <string name="movie_no_overview_text">No available description</string>
+    <string name="movie_rating_text">IMDb:</string>
+    <string name="movie_overview_show_more_text">More</string>
+    <!--Messages-->
+    <string name="message_unknown_text">Unknown</string>
+    <string name="message_start_text">Find an awesome movie to watch!</string>
+    <string name="message_to_watch_start_text">You can save here any movies you would like to watch</string>
+    <string name="message_no_connection_text">No internet connection</string>
+    <string name="message_share_text">Share your movies</string>
+    <string name="message_share1_text">Movies I\'d like to watch:</string>
+    <string name="message_share2_text">Found by Filmographer</string>
+    <!--Menu-->
+    <string name="menu_refresh_text">Find movies</string>
+    <string name="menu_share_text">Share</string>
+    <string name="menu_filter_parameters_text">Filter parameters</string>
+    <string name="menu_settings_text">Settings</string>
+    <string name="menu_to_watch_text">To Watch list</string>
+    <string name="menu_discover_title">Discover movies</string>
+    <string name="menu_to_watch_title">Movies to watch</string>
+    <string name="menu_about_title">About</string>
     <!--Filter-->
+    <string name="filter_release_date_text">Release year</string>
+    <string name="filter_date_divider_text">-</string>
+    <string name="filter_genre_text">Genre</string>
+    <string name="filter_sort_order_text">Sort order</string>
+    <string name="filter_spinner_dropdown_text">Spinner dropdown</string>
+    <string name="filter_tmdb_logo_text">TMDb logo</string>
     <string-array name="filter_genres_names">
         <item>Any</item>
         <item>Action</item>
@@ -45,4 +83,12 @@
         <item>10752</item>
         <item>37</item>
     </string-array>
+    <string-array name="filter_sort_order_names">
+        <item>Random</item>
+        <item>By popularity</item>
+    </string-array>
+    <!--Navigation Drawer-->
+    <string name="drawer_list_item">Navigation drawer item</string>
+    <string name="drawer_open">Show</string>
+    <string name="drawer_close">Hide</string>
 </resources>
