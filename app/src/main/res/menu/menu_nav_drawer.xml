@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_drawer_discover"
+            android:icon="@drawable/ic_discover_movies"
+            android:title="@string/menu_discover_title"
+            />
+        <item
+            android:id="@+id/menu_drawer_watch_list"
+            android:icon="@drawable/ic_to_watch_list"
+            android:title="@string/menu_to_watch_text"
+            />
+        <item
+            android:id="@+id/menu_drawer_filter"
+            android:icon="@drawable/ic_filter_settings"
+            android:title="@string/menu_filter_parameters_text"
+            />
+        <item
+            android:icon="@drawable/ic_settings"
+            android:title="@string/menu_settings_text"
+            />
+        <item
+            android:icon="@drawable/ic_about"
+            android:title="@string/menu_about_title"
+            />
+    </group>
+</menu>
