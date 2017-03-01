@@ -58,6 +58,7 @@ public class ParseUtils {
             movie.setBackdropPath(movieNode.path(Movie.KEY_BACKDROP_PATH).asText());
             movie.setReleaseDate(movieNode.path(Movie.KEY_RELEASE_DATE).asText());
             movie.setOverview(movieNode.path(Movie.KEY_OVERVIEW).asText());
+            movie.setStatus(Movie.STATUS_DISCOVERED);
 
             //заполнение жанров
             String genres = "";

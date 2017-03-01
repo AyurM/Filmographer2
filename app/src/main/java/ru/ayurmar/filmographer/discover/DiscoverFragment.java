@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +17,19 @@ import java.util.List;
 
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
+import ru.ayurmar.filmographer.model.MovieCollection;
 import ru.ayurmar.filmographer.utils.ParseUtils;
 
 public class DiscoverFragment extends Fragment {
     RecyclerView mRecyclerView;
     List<Movie> mMovieList = new ArrayList<>();
+    public static final String TAG = "Filmographer";
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        new LoadMoviesTask().execute(getActivity());
+        mMovieList = MovieCollection.get(getActivity()).getMovies(Movie.STATUS_DISCOVERED);
 //        setHasOptionsMenu(true);
     }
 
@@ -36,6 +39,11 @@ public class DiscoverFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_discover, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_discover_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if(mMovieList.isEmpty()){
+            new LoadMoviesTask().execute(getActivity());
+        } else {
+            setupAdapter(mMovieList);
+        }
         return v;
     }
 
@@ -46,8 +54,11 @@ public class DiscoverFragment extends Fragment {
     private class LoadMoviesTask extends AsyncTask<Context, Void, List<Movie>> {
         @Override
         protected List<Movie> doInBackground(Context... params) {
+            Log.i(TAG, "AsyncTask started...\nClearing discovered movies...");
+            MovieCollection.get(getActivity()).clear(Movie.STATUS_DISCOVERED);
             List<Movie> result;
             String url = ParseUtils.createUrl();
+            Log.i(TAG, "Discovering movies from: " + url);
             try{
                 result = ParseUtils.parseTmdbJson(ParseUtils.getJson(url), params[0]);
             } catch (IOException e){
@@ -58,8 +69,13 @@ public class DiscoverFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Movie> result) {
-            mMovieList.addAll(result);
+            if(result == null){
+                return;
+            }
+            MovieCollection.get(getActivity()).addAll(result);
+            mMovieList = result;
             setupAdapter(mMovieList);
+            Log.i(TAG, result.size() + " added to database.\nAsyncTask finished.");
         }
     }
 }

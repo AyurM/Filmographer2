@@ -5,13 +5,9 @@ import android.content.Context;
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
 
-/**
- * Created by Ayur on 27.02.2017.
- */
-
 public class FormatUtils {
-    private static final int sMaxOverviewLength = 220;    //максимальное кол-во символов в описании фильма
-    private static final double sImdbRatingThreshold = 7.0;    //оценка IMDb, превышающая данный порог, выделяется
+    private static final int sMaxOverviewLength = 220;
+    private static final double sImdbRatingThreshold = 7.0;
 
     private static String editReleaseYear(String year, Context context){
         if(year != null && year.length() > 4){
@@ -23,7 +19,7 @@ public class FormatUtils {
     }
 
     private static String editImdbRating(String imdbRating, Context context){
-        if(imdbRating == null){
+        if(imdbRating == null || imdbRating.equals("")){
             imdbRating = context.getString(R.string.message_unknown_text);
         }
         return imdbRating;
