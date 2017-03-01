@@ -12,10 +12,6 @@ import ru.ayurmar.filmographer.database.MovieBaseHelper;
 import ru.ayurmar.filmographer.database.MovieCursorWrapper;
 import ru.ayurmar.filmographer.database.MovieDbSchema.MovieTable;
 
-/**
- * Класс для работы со списком фильмов, Аюр М., 16.02.2017.
- */
-
 public class MovieCollection {
     private static MovieCollection sMovieCollection;
     private SQLiteDatabase mDatabase;

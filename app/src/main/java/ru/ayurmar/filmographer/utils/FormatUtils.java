@@ -1,6 +1,8 @@
 package ru.ayurmar.filmographer.utils;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
@@ -67,4 +69,7 @@ public class FormatUtils {
                 "</b>" + " " + editedOverview;
     }
 
+    public static void showConnectionErrorMessage(FragmentActivity activity){
+        Toast.makeText(activity, R.string.message_no_connection_text, Toast.LENGTH_SHORT).show();
+    }
 }

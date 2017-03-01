@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,12 +22,16 @@ import java.util.List;
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
 import ru.ayurmar.filmographer.model.MovieCollection;
+import ru.ayurmar.filmographer.utils.FormatUtils;
 import ru.ayurmar.filmographer.utils.ParseUtils;
 
 public class DiscoverFragment extends Fragment {
-    RecyclerView mRecyclerView;
-    List<Movie> mMovieList = new ArrayList<>();
     public static final String TAG = "Filmographer";
+
+    RecyclerView mRecyclerView;
+    ProgressBar mProgressBar;
+    List<Movie> mMovieList = new ArrayList<>();
+    boolean mDiscoverInProgress = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -40,10 +45,11 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_discover, container, false);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_discover_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if(mMovieList.isEmpty()){
-            new LoadMoviesTask().execute(getActivity());
+            discoverMovies(true);
         } else {
             setupAdapter(mMovieList);
         }
@@ -61,6 +67,7 @@ public class DiscoverFragment extends Fragment {
         switch (item.getItemId()) {
             //обновить список discovered фильмов
             case R.id.menu_item_refresh_list:
+                discoverMovies(true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -71,11 +78,32 @@ public class DiscoverFragment extends Fragment {
         mRecyclerView.setAdapter(new DiscoverAdapter(movieList, getActivity()));
     }
 
+    private void discoverMovies(boolean clearDb){
+        if(ParseUtils.isOnline(getActivity())){
+            if(!mDiscoverInProgress){
+                mDiscoverInProgress = true;
+                if(clearDb){
+                    MovieCollection.get(getActivity()).clear(Movie.STATUS_DISCOVERED);
+                    mMovieList.clear();
+                }
+                new LoadMoviesTask().execute(getActivity());
+            }
+        } else {
+            FormatUtils.showConnectionErrorMessage(getActivity());
+        }
+    }
+
     private class LoadMoviesTask extends AsyncTask<Context, Void, List<Movie>> {
+
+        @Override
+        protected void onPreExecute() {
+            mRecyclerView.setAlpha(0.1f);
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+
         @Override
         protected List<Movie> doInBackground(Context... params) {
-            Log.i(TAG, "AsyncTask started...\nClearing discovered movies...");
-            MovieCollection.get(getActivity()).clear(Movie.STATUS_DISCOVERED);
+            Log.i(TAG, "AsyncTask started...");
             List<Movie> result;
             String url = ParseUtils.createUrl();
             Log.i(TAG, "Discovering movies from: " + url);
@@ -95,7 +123,10 @@ public class DiscoverFragment extends Fragment {
             MovieCollection.get(getActivity()).addAll(result);
             mMovieList = result;
             setupAdapter(mMovieList);
-            Log.i(TAG, result.size() + " added to database.\nAsyncTask finished.");
+            mRecyclerView.setAlpha(1f);
+            mProgressBar.setVisibility(View.GONE);
+            mDiscoverInProgress = false;
+            Log.i(TAG, result.size() + " movies added to database.\nAsyncTask finished.");
         }
     }
 }

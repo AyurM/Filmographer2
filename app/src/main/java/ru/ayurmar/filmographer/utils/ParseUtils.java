@@ -1,7 +1,10 @@
 package ru.ayurmar.filmographer.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,5 +93,16 @@ public class ParseUtils {
                 .appendQueryParameter("api_key", API_KEY)
                 .appendQueryParameter("language", Locale.getDefault().getLanguage());
         return builder.build().toString();
+    }
+
+    /**
+     * Проверяет наличие интернет-соединения
+     * @return true, если имеется доступное подключение
+     */
+    public static boolean isOnline(FragmentActivity activity){
+        ConnectivityManager connManager = (ConnectivityManager) activity
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 }
