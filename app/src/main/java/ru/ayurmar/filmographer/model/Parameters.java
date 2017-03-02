@@ -7,11 +7,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import ru.ayurmar.filmographer.discover.DiscoverFragment;
+import ru.ayurmar.filmographer.utils.FormatUtils;
 
 public class Parameters {
     public static final String RELEASE_DATE_GTE = "primary_release_date.gte";
@@ -20,15 +21,25 @@ public class Parameters {
     public static final String VOTE_AVERAGE_GTE = "vote_average.gte";
     public static final String SORT_BY = "sort_by";
     private static final String VOTE_COUNT_GTE = "vote_count.gte";
-    
-    private static final String sSaveFilename = "FilterParameters.json";
-    private static final String sVoteCountGte = "200";
+    //настройки по умолчанию
+    public static final int DEFAULT_MIN_RELEASE_DATE = 1970;
+    public static final int DEFAULT_MAX_RELEASE_DATE = Calendar.getInstance().get(Calendar.YEAR);
+    public static final String DEFAULT_MMDD = "-01-01";
+    public static final String CURRENT_MMDD = setCurrentMMDD();
+    public static final String MAX_MMDD = "-12-31";
+    private static final String sDefaultVoteAverage = "5.0";
+    private static final String sDefaultVoteCountGte = "200";
 
+
+    private static final String sSaveFilename = "FilterParameters.json";
     private Map<String, String> mParameters;
 
     public Parameters(){
         mParameters = new HashMap<>();
-        setParameter(VOTE_COUNT_GTE, sVoteCountGte);
+        setParameter(VOTE_COUNT_GTE, sDefaultVoteCountGte);
+        setParameter(VOTE_AVERAGE_GTE, sDefaultVoteAverage);
+        setParameter(RELEASE_DATE_GTE, DEFAULT_MIN_RELEASE_DATE + DEFAULT_MMDD);
+        setParameter(RELEASE_DATE_LTE, DEFAULT_MAX_RELEASE_DATE + CURRENT_MMDD);
     }
 
     public Map<String, String> getParameters() {
@@ -73,7 +84,7 @@ public class Parameters {
             mapper.writeValue(outputStream, mParameters);
             outputStream.close();
         } catch (IOException e){
-            Log.e(DiscoverFragment.TAG, "Error while saving filter parameters!");
+            Log.e(FormatUtils.TAG, "Error while saving filter parameters!");
             e.printStackTrace();
         }
     }
@@ -87,8 +98,17 @@ public class Parameters {
                     new TypeReference<Map<String, String>>(){});
             inputStream.close();
         } catch (IOException e){
-            Log.e(DiscoverFragment.TAG, "Error while loading filter parameters!");
+            Log.e(FormatUtils.TAG, "Error while loading filter parameters!");
             e.printStackTrace();
         }
+    }
+
+    private static String setCurrentMMDD(){
+        String currMMDD = "-";
+        String currMM = Integer.toString(Calendar.getInstance().get(Calendar.MONTH) + 1);
+        currMM = currMM.length() == 1 ? "0" + currMM : currMM;
+        String currDD = Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        currMMDD += currMM + "-" +currDD;
+        return currMMDD;
     }
 }

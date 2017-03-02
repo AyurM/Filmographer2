@@ -8,6 +8,7 @@ import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
 
 public class FormatUtils {
+    public static final String TAG = "Filmographer";
     private static final int sMaxOverviewLength = 220;
     private static final double sImdbRatingThreshold = 7.0;
 

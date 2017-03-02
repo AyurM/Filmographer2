@@ -27,7 +27,7 @@ import ru.ayurmar.filmographer.utils.FormatUtils;
 import ru.ayurmar.filmographer.utils.ParseUtils;
 
 public class DiscoverFragment extends Fragment {
-    public static final String TAG = "Filmographer";
+    public static final String FRAGMENT_TAG = "discover_fragment";
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
@@ -118,10 +118,10 @@ public class DiscoverFragment extends Fragment {
 
         @Override
         protected List<Movie> doInBackground(Context... params) {
-            Log.i(TAG, "AsyncTask started...");
+            Log.i(FormatUtils.TAG, "AsyncTask started...");
             List<Movie> result;
             String url = ParseUtils.createUrl(mParameters);
-            Log.i(TAG, "Discovering movies from: " + url);
+            Log.i(FormatUtils.TAG, "Discovering movies from: " + url);
             try{
                 result = ParseUtils.parseTmdbJson(ParseUtils.getJson(url), params[0]);
             } catch (IOException e){
@@ -141,7 +141,7 @@ public class DiscoverFragment extends Fragment {
             mRecyclerView.setAlpha(1f);
             mProgressBar.setVisibility(View.GONE);
             mDiscoverInProgress = false;
-            Log.i(TAG, result.size() + " movies added to database.\nAsyncTask finished.");
+            Log.i(FormatUtils.TAG, result.size() + " movies added to database.\nAsyncTask finished.");
         }
     }
 }

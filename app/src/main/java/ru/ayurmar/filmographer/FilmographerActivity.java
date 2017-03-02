@@ -13,15 +13,18 @@ import android.view.MenuItem;
 import android.view.View;
 
 import ru.ayurmar.filmographer.discover.DiscoverFragment;
+import ru.ayurmar.filmographer.filter.FilterFragment;
 
 public class FilmographerActivity extends SingleFragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mActionBar;
     private DiscoverFragment mDiscoverFragment;
+    private FilterFragment mFilterFragment;
 
     @Override
     protected Fragment createFragment() {
-        return new DiscoverFragment();
+        mDiscoverFragment = new DiscoverFragment();
+        return mDiscoverFragment;
     }
 
     @Override
@@ -66,9 +69,6 @@ public class FilmographerActivity extends SingleFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        //noinspection SimplifiableIfStatement
         if(mActionBar.onOptionsItemSelected(item)) {
             return true;
         }
@@ -91,18 +91,32 @@ public class FilmographerActivity extends SingleFragmentActivity {
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
         switch(menuItem.getItemId()){
             case R.id.menu_drawer_discover:
-//                if(mDiscoverFragment == null){
-//                    mDiscoverFragment = new DiscoverFragment();
-//                    fm.beginTransaction().replace(R.id.fragment_container, mDiscoverFragment)
-//                            .addToBackStack(DiscoverFragment.TAG).commit();
-//                }
-//                else{
-//                    fm.popBackStack(DiscoverFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                }
+                if(fragment.getClass() != DiscoverFragment.class){
+                    if(mDiscoverFragment == null){
+                        mDiscoverFragment = new DiscoverFragment();
+                        fm.beginTransaction().replace(R.id.fragment_container, mDiscoverFragment)
+                                .addToBackStack(DiscoverFragment.FRAGMENT_TAG).commit();
+                    }
+                    else{
+                        fm.popBackStack(DiscoverFragment.FRAGMENT_TAG,
+                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    }
+                }
                 break;
             case R.id.menu_drawer_watch_list:
                 break;
             case R.id.menu_drawer_filter:
+                if(fragment.getClass() != FilterFragment.class){
+                    if(mFilterFragment == null){
+                        mFilterFragment = new FilterFragment();
+                        fm.beginTransaction().replace(R.id.fragment_container, mFilterFragment)
+                                .addToBackStack(FilterFragment.FRAGMENT_TAG).commit();
+                    }
+                    else{
+                        fm.popBackStack(FilterFragment.FRAGMENT_TAG,
+                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    }
+                }
                 break;
             default:
         }
