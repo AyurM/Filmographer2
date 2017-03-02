@@ -10,16 +10,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
+import ru.ayurmar.filmographer.model.Parameters;
 
 /**
  * Содержит методы для загрузки сведений о фильмах, Аюр М., 16.02.2017.
@@ -88,10 +89,14 @@ public class ParseUtils {
         }
     }
 
-    public static String createUrl(){
+    public static String createUrl(Parameters parameters){
         Uri.Builder builder = Uri.parse(TMDB_DISCOVER_BASE).buildUpon()
                 .appendQueryParameter("api_key", API_KEY)
                 .appendQueryParameter("language", Locale.getDefault().getLanguage());
+        Set<String> keys = parameters.getFilledParameters();
+        for(String key : keys){
+            builder.appendQueryParameter(key, parameters.getParameter(key));
+        }
         return builder.build().toString();
     }
 

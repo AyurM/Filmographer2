@@ -3,9 +3,6 @@ package ru.ayurmar.filmographer.utils;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import ru.ayurmar.filmographer.R;
-import ru.ayurmar.filmographer.model.Movie;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;

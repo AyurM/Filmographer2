@@ -22,6 +22,7 @@ import java.util.List;
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
 import ru.ayurmar.filmographer.model.MovieCollection;
+import ru.ayurmar.filmographer.model.Parameters;
 import ru.ayurmar.filmographer.utils.FormatUtils;
 import ru.ayurmar.filmographer.utils.ParseUtils;
 
@@ -30,6 +31,7 @@ public class DiscoverFragment extends Fragment {
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
+    Parameters mParameters = new Parameters();
     List<Movie> mMovieList = new ArrayList<>();
     boolean mDiscoverInProgress = false;
 
@@ -39,6 +41,7 @@ public class DiscoverFragment extends Fragment {
         setRetainInstance(true);
         setHasOptionsMenu(true);
         mMovieList = MovieCollection.get(getActivity()).getMovies(Movie.STATUS_DISCOVERED);
+        mParameters.loadParameters(getActivity());
     }
 
     @Override
@@ -74,6 +77,18 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        mParameters.loadParameters(getActivity());
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mParameters.saveParameters(getActivity());
+    }
+
     private void setupAdapter(List<Movie> movieList) {
         mRecyclerView.setAdapter(new DiscoverAdapter(movieList, getActivity()));
     }
@@ -105,7 +120,7 @@ public class DiscoverFragment extends Fragment {
         protected List<Movie> doInBackground(Context... params) {
             Log.i(TAG, "AsyncTask started...");
             List<Movie> result;
-            String url = ParseUtils.createUrl();
+            String url = ParseUtils.createUrl(mParameters);
             Log.i(TAG, "Discovering movies from: " + url);
             try{
                 result = ParseUtils.parseTmdbJson(ParseUtils.getJson(url), params[0]);
