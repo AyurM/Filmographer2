@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,9 +28,10 @@ import ru.ayurmar.filmographer.model.Parameters;
  */
 
 public class ParseUtils {
-    public static final String TMDB_MOVIE_BASE = "http://api.themoviedb.org/3/movie/";
-    public static final String TMDB_DISCOVER_BASE = "http://api.themoviedb.org/3/discover/movie/";
-    public static final String API_KEY = "4cdbd4367d3bbac1a675ab6e9416c1e6";
+    private static final String sOmdbBase = "http://www.omdbapi.com/";
+    private static final String sTmdbMovieBase = "http://api.themoviedb.org/3/movie/";
+    private static final String sTmdbDiscoverBase = "http://api.themoviedb.org/3/discover/movie/";
+    private static final String sApiKey = "4cdbd4367d3bbac1a675ab6e9416c1e6";
 
     public static JsonNode getJson(String url)
         throws IOException{
@@ -81,6 +83,31 @@ public class ParseUtils {
         return result;
     }
 
+    public static void getImdbID(Movie movie)
+        throws IOException{
+        String url = Uri.parse(sTmdbMovieBase + movie.getId()).buildUpon()
+                .appendQueryParameter("api_key", sApiKey)
+                .appendQueryParameter("language", Locale.getDefault().getLanguage())
+                .build().toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(new URL(url));
+        movie.setImdbId(rootNode.path(Movie.KEY_IMDB_ID).asText());
+    }
+
+    public static void getImdbInfo(Movie movie)
+            throws IOException{
+        String url = Uri.parse(sOmdbBase).buildUpon()
+                .appendQueryParameter("i", movie.getImdbId())
+                .build().toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(new URL(url));
+        String rating = rootNode.path(Movie.KEY_IMDB_RATING).asText();
+        String actors = rootNode.path(Movie.KEY_ACTORS).asText();
+        movie.setImdbRating(rating);
+        movie.setActors(actors);
+        movie.setImdbInfoLoaded(true);
+    }
+
     private static String getGenreNameById(String id, List<String> ids, List<String> names){
         if(ids.contains(id)){
             return names.get(ids.indexOf(id));
@@ -90,8 +117,8 @@ public class ParseUtils {
     }
 
     public static String createUrl(Parameters parameters){
-        Uri.Builder builder = Uri.parse(TMDB_DISCOVER_BASE).buildUpon()
-                .appendQueryParameter("api_key", API_KEY)
+        Uri.Builder builder = Uri.parse(sTmdbDiscoverBase).buildUpon()
+                .appendQueryParameter("api_key", sApiKey)
                 .appendQueryParameter("language", Locale.getDefault().getLanguage());
         Set<String> keys = parameters.getFilledParameters();
         for(String key : keys){

@@ -11,14 +11,18 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
+import ru.ayurmar.filmographer.utils.ParseUtils;
 
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverHolder> {
     List<Movie> mAdapterList;
     Context mContext;
+    ImdbInfoLoader<DiscoverHolder> mInfoLoader;
 
-    public DiscoverAdapter(List<Movie> movieList, Context context){
+    public DiscoverAdapter(List<Movie> movieList, Context context,
+                           ImdbInfoLoader<DiscoverHolder> infoLoader){
         mAdapterList = movieList;
         mContext = context;
+        mInfoLoader = infoLoader;
     }
 
     @Override
@@ -31,13 +35,16 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverHolder> {
 
     @Override
     public void onBindViewHolder(DiscoverHolder movieHolder, int position) {
-        Movie movieInfo = mAdapterList.get(position);
-        movieHolder.bindMovie(movieInfo, mContext);
+        Movie movie = mAdapterList.get(position);
+        movieHolder.bindMovie(movie, mContext);
         //загрузка картинки к фильму
-        Picasso.with(mContext).load(movieInfo.getBackdropPath())
+        Picasso.with(mContext).load(movie.getBackdropPath())
                 .placeholder(R.drawable.poster_placeholder)
                 .error(R.drawable.poster_placeholder)
                 .into(movieHolder.getMoviePoster());
+        if(!movie.isImdbInfoLoaded()){
+            mInfoLoader.queueLoad(movieHolder, movie);
+        }
     }
 
     @Override

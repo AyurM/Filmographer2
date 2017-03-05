@@ -24,13 +24,14 @@ public class MovieBaseHelper extends SQLiteOpenHelper {
                 " _id integer primary key autoincrement, " +
                 MovieTable.Cols.TMDBID + ", " +
                 MovieTable.Cols.TITLE + ", " +
-                MovieTable.Cols.IMDB_LINK + ", " +
+                MovieTable.Cols.IMDB_ID + ", " +
                 MovieTable.Cols.BACKDROP_PATH + ", " +
                 MovieTable.Cols.RELEASE_DATE + ", " +
                 MovieTable.Cols.OVERVIEW + ", " +
                 MovieTable.Cols.IMDB_RATING + ", " +
                 MovieTable.Cols.ACTORS + ", " +
                 MovieTable.Cols.GENRES + ", " +
+                MovieTable.Cols.INFO_LOADED + ", " +
                 MovieTable.Cols.STATUS + ")"
         );
     }

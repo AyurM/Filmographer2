@@ -10,12 +10,12 @@ public class Movie {
     public static final String KEY_RESULTS = "results";
     public static final String KEY_TITLE = "title";
     public static final String KEY_ID = "id";
-    public static final String KEY_IMDB_LINK = "imdb_link";
+    public static final String KEY_IMDB_ID = "imdb_id";
     public static final String KEY_BACKDROP_PATH = "backdrop_path";
     public static final String KEY_OVERVIEW = "overview";
     public static final String KEY_RELEASE_DATE = "release_date";
     public static final String KEY_IMDB_RATING = "imdbRating";
-    public static final String KEY_ACTORS = "actors";
+    public static final String KEY_ACTORS = "Actors";
     public static final String KEY_IMDB_INFO_LOADED = "imdbInfoLoaded";
     public static final String KEY_GENRES = "genres";
     public static final String KEY_GENRES_IDS = "genre_ids";
@@ -28,7 +28,7 @@ public class Movie {
 
     private String mId = "";
     private String mTitle = "";
-    private String mImdbLink = "";
+    private String mImdbId = "";
     private String mBackdropPath = "";
     private String mReleaseDate = "";
     private String mOverview = "";
@@ -36,7 +36,7 @@ public class Movie {
     private String mActors = "";
     private String mGenres = "";
     private String mStatus = "";
-    private boolean mImdbInfoLoaded;
+    private boolean mImdbInfoLoaded = false;
 
     public Movie(){
     }
@@ -47,7 +47,7 @@ public class Movie {
                 KEY_TITLE + ": " + getTitle() + "; " +
                 KEY_OVERVIEW + ": " + getOverview() + "; " +
                 KEY_RELEASE_DATE + ": " + getReleaseDate() + "; " +
-                KEY_IMDB_LINK + ": " + getImdbLink() + "; " +
+                KEY_IMDB_ID + ": " + getImdbId() + "; " +
                 KEY_BACKDROP_PATH + ": " + getBackdropPath() + ";";
     }
 
@@ -76,16 +76,12 @@ public class Movie {
         mTitle = title;
     }
 
-    public String getImdbLink() {
-        return mImdbLink;
+    public String getImdbId() {
+        return mImdbId;
     }
 
-    public void setImdbLink(String imdbLink) {
-        if(isImdbInfoLoaded()){
-            this.mImdbLink = imdbLink;
-        } else {
-            this.mImdbLink = imdbLink == null ?  null : IMDB_BASE_URL + imdbLink;
-        }
+    public void setImdbId(String imdbId) {
+        this.mImdbId = imdbId;
     }
 
     public String getBackdropPath() {

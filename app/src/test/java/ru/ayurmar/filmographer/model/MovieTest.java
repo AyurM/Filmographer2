@@ -19,7 +19,7 @@ public class MovieTest {
     public void whenInstantiatedThenInfoIsEmpty(){
         assertEquals("", mMovie.getTitle());
         assertEquals("", mMovie.getId());
-        assertEquals("", mMovie.getImdbLink());
+        assertEquals("", mMovie.getImdbId());
         assertEquals("", mMovie.getImdbRating());
         assertEquals("", mMovie.getReleaseDate());
         assertEquals("", mMovie.getOverview());
@@ -42,13 +42,13 @@ public class MovieTest {
         mMovie.setTitle(title);
         mMovie.setOverview(overview);
         mMovie.setReleaseDate(release_date);
-        mMovie.setImdbLink(imdb_link);
+        mMovie.setImdbId(imdb_link);
         mMovie.setBackdropPath(backdrop_path);
         String expectedDescription = Movie.KEY_ID + ": " + id + "; " +
                 Movie.KEY_TITLE + ": " + title + "; " +
                 Movie.KEY_OVERVIEW + ": " + overview + "; " +
                 Movie.KEY_RELEASE_DATE + ": " + release_date + "; " +
-                Movie.KEY_IMDB_LINK + ": " + imdb_link + "; " +
+                Movie.KEY_IMDB_ID + ": " + imdb_link + "; " +
                 Movie.KEY_BACKDROP_PATH + ": " + backdrop_path + ";";
         assertEquals(expectedDescription, mMovie.toString());
     }

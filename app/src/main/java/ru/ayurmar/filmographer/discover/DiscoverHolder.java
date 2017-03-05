@@ -6,13 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import ru.ayurmar.filmographer.R;
 import ru.ayurmar.filmographer.model.Movie;
+import ru.ayurmar.filmographer.model.MovieCollection;
 import ru.ayurmar.filmographer.utils.FormatUtils;
 
 public class DiscoverHolder extends RecyclerView.ViewHolder {
@@ -51,6 +51,11 @@ public class DiscoverHolder extends RecyclerView.ViewHolder {
         }
         mMovieInfo.setVisibility(View.VISIBLE);
         mMovieInfo.setText(spannedInfo);
+    }
+
+    public void rebindMovie(Context context){
+        MovieCollection.get(context).update(mMovie);
+        bindMovie(mMovie, context);
     }
 
     public ImageView getMoviePoster(){

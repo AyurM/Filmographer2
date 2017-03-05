@@ -3,7 +3,10 @@ package ru.ayurmar.filmographer.discover;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,6 +37,7 @@ public class DiscoverFragment extends Fragment {
     Parameters mParameters = new Parameters();
     List<Movie> mMovieList = new ArrayList<>();
     boolean mDiscoverInProgress = false;
+    private ImdbInfoLoader<DiscoverHolder> mInfoLoader;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -42,6 +46,19 @@ public class DiscoverFragment extends Fragment {
         setHasOptionsMenu(true);
         mMovieList = MovieCollection.get(getActivity()).getMovies(Movie.STATUS_DISCOVERED);
         mParameters.loadParameters(getActivity());
+
+        Handler responseHandler = new Handler();
+        mInfoLoader = new ImdbInfoLoader<>(responseHandler);
+        mInfoLoader.setImdbInfoLoadListener(
+                new ImdbInfoLoader.ImdbInfoLoadListener<DiscoverHolder>() {
+            @Override
+            public void onImdbInfoLoaded(DiscoverHolder movieHolder) {
+                movieHolder.rebindMovie(getActivity());    //передача загруженных IMDb-сведений о фильме
+            }
+        });
+        mInfoLoader.start();
+        mInfoLoader.getLooper();
+        Log.i(FormatUtils.TAG, "Background thread started");
     }
 
     @Override
@@ -51,6 +68,10 @@ public class DiscoverFragment extends Fragment {
         mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_discover_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle(getResources().getString(R.string.menu_discover_title));
+        }
         if(mMovieList.isEmpty()){
             discoverMovies(true);
         } else {
@@ -89,8 +110,22 @@ public class DiscoverFragment extends Fragment {
         mParameters.saveParameters(getActivity());
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mInfoLoader.quit();
+        Log.i(FormatUtils.TAG, "Background thread destroyed");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mInfoLoader.clearQueue();
+    }
+
     private void setupAdapter(List<Movie> movieList) {
-        mRecyclerView.setAdapter(new DiscoverAdapter(movieList, getActivity()));
+        mRecyclerView.setAdapter(
+                new DiscoverAdapter(movieList, getActivity(), mInfoLoader));
     }
 
     private void discoverMovies(boolean clearDb){

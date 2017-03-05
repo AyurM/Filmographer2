@@ -32,13 +32,14 @@ public class MovieCollection {
         ContentValues values = new ContentValues();
         values.put(MovieTable.Cols.TMDBID, movie.getId());
         values.put(MovieTable.Cols.TITLE, movie.getTitle());
-        values.put(MovieTable.Cols.IMDB_LINK, movie.getImdbLink());
+        values.put(MovieTable.Cols.IMDB_ID, movie.getImdbId());
         values.put(MovieTable.Cols.BACKDROP_PATH, movie.getBackdropPath());
         values.put(MovieTable.Cols.RELEASE_DATE, movie.getReleaseDate());
         values.put(MovieTable.Cols.OVERVIEW, movie.getOverview());
         values.put(MovieTable.Cols.IMDB_RATING, movie.getImdbRating());
         values.put(MovieTable.Cols.ACTORS, movie.getActors());
         values.put(MovieTable.Cols.GENRES, movie.getGenres());
+        values.put(MovieTable.Cols.INFO_LOADED, String.valueOf(movie.isImdbInfoLoaded()));
         values.put(MovieTable.Cols.STATUS, movie.getStatus());
         return values;
     }
