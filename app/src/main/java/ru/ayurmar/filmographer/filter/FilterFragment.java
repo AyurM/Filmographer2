@@ -19,14 +19,13 @@ import ru.ayurmar.filmographer.model.Parameters;
  */
 
 public class FilterFragment extends Fragment {
-    public static final String FRAGMENT_TAG = "filter_fragment";
 
     private Parameters mParameters;
     private int mSelectedGenre, mSelectedSortOrder;
     private NumberPicker mDateGtePicker, mDateLtePicker;
     private boolean mParametersChanged;
 
-     @Override
+    @Override
     public void onCreate(Bundle savedInstanceState){
          super.onCreate(savedInstanceState);
          setRetainInstance(true);
@@ -75,25 +74,27 @@ public class FilterFragment extends Fragment {
         Spinner genreSpinner = (Spinner) v.findViewById(R.id.filter_spinner_genre);
         Spinner sortOrderSpinner = (Spinner) v.findViewById(R.id.filter_spinner_sort_order);
         //выставить выбранный ранее жанр и порядок сортировки
-//        mSelectedGenre = findSelectedGenrePosition(mParameters);
+        mSelectedGenre = findSelectedGenrePosition(mParameters);
         genreSpinner.setSelection(mSelectedGenre);
 //        mSelectedSortOrder = mParameters.getSortOrder();
         sortOrderSpinner.setSelection(mSelectedSortOrder);
+
         //слушатель изменений жанра
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if(i != mSelectedGenre){
-//                    String[] genreIds = getResources().getStringArray(R.array.filter_genres_ids);
-//                    mParameters.setWithGenres(i == 0 ? "" : genreIds[i]);
-//                    mParametersChanged = true;
-//                }
+                if(i != mSelectedGenre){
+                    String[] genreIds = getResources().getStringArray(R.array.filter_genres_ids);
+                    mParameters.setParameter(Parameters.WITH_GENRES, i == 0 ? "" : genreIds[i]);
+                    mParametersChanged = true;
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
         //слушатель изменений порядка сортировки результатов
         sortOrderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -145,18 +146,18 @@ public class FilterFragment extends Fragment {
         return result;
     }
 	
-//    private int findSelectedGenrePosition(Parameters parameters){
-//        String selectedGenre = parameters.getWithGenres();
-//        if(selectedGenre == null || selectedGenre.equals("")){
-//            return 0;
-//        } else {
-//            String[] genreIds = getResources().getStringArray(R.array.filter_genres_ids);
-//            for(int i = 1; i < genreIds.length; i++){
-//                if(genreIds[i].equals(selectedGenre)){
-//                    return i;
-//                }
-//            }
-//        }
-//        return 0;
-//    }
+    private int findSelectedGenrePosition(Parameters parameters){
+        String selectedGenre = parameters.getParameter(Parameters.WITH_GENRES);
+        if(selectedGenre == null){
+            return 0;
+        } else {
+            String[] genreIds = getResources().getStringArray(R.array.filter_genres_ids);
+            for(int i = 1; i < genreIds.length; i++){
+                if(genreIds[i].equals(selectedGenre)){
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
 }

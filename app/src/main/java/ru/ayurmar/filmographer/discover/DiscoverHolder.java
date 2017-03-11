@@ -7,7 +7,6 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import ru.ayurmar.filmographer.R;
@@ -16,12 +15,11 @@ import ru.ayurmar.filmographer.model.MovieCollection;
 import ru.ayurmar.filmographer.utils.FormatUtils;
 
 public class DiscoverHolder extends RecyclerView.ViewHolder {
-    ImageView mMoviePoster;
-    TextView mMovieTitle;
-    TextView mMovieInfo;
-    FloatingActionButton mButtonWantToWatch;
-    RelativeLayout mMainInfoLayout;
-    Movie mMovie;
+    private ImageView mMoviePoster;
+    private TextView mMovieTitle;
+    private TextView mMovieInfo;
+    private FloatingActionButton mButtonWantToWatch;
+    private Movie mMovie;
 
     public DiscoverHolder(View itemView){
         super(itemView);
@@ -29,7 +27,6 @@ public class DiscoverHolder extends RecyclerView.ViewHolder {
         mMovieInfo = (TextView) itemView.findViewById(R.id.text_view_info);
         mMoviePoster = (ImageView) itemView.findViewById(R.id.image_view_backdrop);
         mButtonWantToWatch = (FloatingActionButton) itemView.findViewById(R.id.fab);
-        mMainInfoLayout = (RelativeLayout) itemView.findViewById(R.id.layout_main_info);
     }
 
     public void bindMovie(Movie movie, Context context){

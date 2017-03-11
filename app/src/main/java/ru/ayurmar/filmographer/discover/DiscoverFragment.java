@@ -30,7 +30,6 @@ import ru.ayurmar.filmographer.utils.FormatUtils;
 import ru.ayurmar.filmographer.utils.ParseUtils;
 
 public class DiscoverFragment extends Fragment {
-    public static final String FRAGMENT_TAG = "discover_fragment";
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;

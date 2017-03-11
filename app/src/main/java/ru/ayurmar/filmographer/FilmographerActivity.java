@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -75,6 +76,18 @@ public class FilmographerActivity extends SingleFragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed(){
+        Fragment fragment = getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_container);
+        if (fragment.getClass() == DiscoverFragment.class){
+            finish();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -92,35 +105,37 @@ public class FilmographerActivity extends SingleFragmentActivity {
         switch(menuItem.getItemId()){
             case R.id.menu_drawer_discover:
                 if(fragment.getClass() != DiscoverFragment.class){
-                    if(mDiscoverFragment == null){
+                    if(mDiscoverFragment == null) {
                         mDiscoverFragment = new DiscoverFragment();
-                        fm.beginTransaction().replace(R.id.fragment_container, mDiscoverFragment)
-                                .addToBackStack(DiscoverFragment.FRAGMENT_TAG).commit();
                     }
-                    else{
-                        fm.popBackStack(DiscoverFragment.FRAGMENT_TAG,
-                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    }
+                    replaceFragment(mDiscoverFragment);
                 }
                 break;
             case R.id.menu_drawer_watch_list:
                 break;
             case R.id.menu_drawer_filter:
                 if(fragment.getClass() != FilterFragment.class){
-                    if(mFilterFragment == null){
+                    if(mFilterFragment == null) {
                         mFilterFragment = new FilterFragment();
-                        fm.beginTransaction().replace(R.id.fragment_container, mFilterFragment)
-                                .addToBackStack(FilterFragment.FRAGMENT_TAG).commit();
                     }
-                    else{
-                        fm.popBackStack(FilterFragment.FRAGMENT_TAG,
-                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    }
+                    replaceFragment(mFilterFragment);
                 }
                 break;
             default:
         }
         menuItem.setChecked(true);
         mDrawerLayout.closeDrawers();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        String backStateName = fragment.getClass().getName();
+        FragmentManager fm = getSupportFragmentManager();
+        boolean fragmentPopped = fm.popBackStackImmediate(backStateName, 0);
+        if(!fragmentPopped){
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment_container, fragment)
+                    .addToBackStack(backStateName)
+                    .commit();
+        }
     }
 }
