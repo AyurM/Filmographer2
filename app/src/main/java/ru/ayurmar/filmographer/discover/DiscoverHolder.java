@@ -1,7 +1,6 @@
 package ru.ayurmar.filmographer.discover;
 
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -18,7 +17,6 @@ public class DiscoverHolder extends RecyclerView.ViewHolder {
     private ImageView mMoviePoster;
     private TextView mMovieTitle;
     private TextView mMovieInfo;
-    private FloatingActionButton mButtonWantToWatch;
     private Movie mMovie;
 
     public DiscoverHolder(View itemView){
@@ -26,7 +24,6 @@ public class DiscoverHolder extends RecyclerView.ViewHolder {
         mMovieTitle = (TextView) itemView.findViewById(R.id.text_view_title);
         mMovieInfo = (TextView) itemView.findViewById(R.id.text_view_info);
         mMoviePoster = (ImageView) itemView.findViewById(R.id.image_view_backdrop);
-        mButtonWantToWatch = (FloatingActionButton) itemView.findViewById(R.id.fab);
     }
 
     public void bindMovie(Movie movie, Context context){

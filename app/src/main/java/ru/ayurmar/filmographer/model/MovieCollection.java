@@ -83,18 +83,16 @@ public class MovieCollection {
     }
 
     public void delete(Movie movie){
-        String tmdbid = movie.getId();
         mDatabase.delete(MovieTable.NAME,
                 MovieTable.Cols.TMDBID + " = ?",
-                new String[] { tmdbid });
+                new String[] { movie.getId() });
     }
 
     public void update(Movie movie){
-        String id = movie.getId();
         ContentValues values = getValues(movie);
         mDatabase.update(MovieTable.NAME, values,
                 MovieTable.Cols.TMDBID + " = ?",
-                new String[] { id });
+                new String[] { movie.getId() });
     }
 
     public void clear(String status){

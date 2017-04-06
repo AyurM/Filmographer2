@@ -3,6 +3,7 @@
     <!--Кнопки-->
     <string name="button_more_movies_text">Еще фильмы</string>
     <string name="button_imdb_text">IMDb</string>
+    <string name="button_details">Подробнее</string>
     <string name="button_want_to_watch_text">Хочу посмотреть</string>
     <string name="button_remove_from_list_text">Убрать из списка</string>
     <string name="button_already_in_list_text">Добавлено</string>

@@ -3,6 +3,7 @@
     <!--Buttons-->
     <string name="button_more_movies_text">Find more movies!</string>
     <string name="button_imdb_text">IMDb</string>
+    <string name="button_details">Details</string>
     <string name="button_want_to_watch_text">Want to watch</string>
     <string name="button_remove_from_list_text">Remove from list</string>
     <string name="button_already_in_list_text">In your list</string>
