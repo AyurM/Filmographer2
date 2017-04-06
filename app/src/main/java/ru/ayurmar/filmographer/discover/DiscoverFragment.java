@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,8 @@ import ru.ayurmar.filmographer.utils.FormatUtils;
 import ru.ayurmar.filmographer.utils.ParseUtils;
 
 public class DiscoverFragment extends Fragment {
+
+    public static final int BACKDROPS_TO_PRELOAD = 4;
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
@@ -67,6 +71,31 @@ public class DiscoverFragment extends Fragment {
         mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_discover_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState){
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        //предзагрузка картинок
+                        LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                        DiscoverAdapter movieAdapter = (DiscoverAdapter)  mRecyclerView.getAdapter();
+                        int startPos = llm.findFirstVisibleItemPosition() + 1;
+                        int endPos = Math.min(startPos + BACKDROPS_TO_PRELOAD, movieAdapter.getItemCount());
+                        for(int i = startPos; i < endPos; i++){
+                            try{
+                                Picasso.with(getContext())
+                                        .load(mMovieList.get(i).getBackdropPath())
+                                        .fetch();
+                            } catch (IndexOutOfBoundsException exc){
+                                return;
+                            }
+                        }
+                }
+            }
+        });
+
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if(actionBar != null){
             actionBar.setTitle(getResources().getString(R.string.menu_discover_title));
